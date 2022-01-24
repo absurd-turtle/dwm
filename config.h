@@ -1,4 +1,4 @@
-/* See LICENSE file for copyright and license details. */
+// /* See LICENSE file for copyright and license details. */
 
 /* Constants */
 #define TERMINAL "st"
@@ -50,12 +50,12 @@ static Sp scratchpads[] = {
 };
 
 /* tagging */
-static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 // static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 // static const char *tags[] = { "󰎤","󰎧","󰎪","󰎭","󰎱","󰎳","󰎶","󰎹","󰎼" };
 // static const char *tags[] = {"","","","","","","","",""};
 // static const char *tags[] = {"","","","","","","","",""};
 static const char *tags[] = { "󱂈","󱂉","󱂊","󱂋","󱂌","󱂍","󱂎","󱂏","󱂐" };
+
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -170,13 +170,13 @@ static Key keys[] = {
 	{ MODKEY,			XK_equal,	spawn,		SHCMD("pamixer --allow-boost -i 5; kill -44 $(pidof dwmblocks)") },
 	{ MODKEY|ShiftMask,		XK_equal,	spawn,		SHCMD("pamixer --allow-boost -i 15; kill -44 $(pidof dwmblocks)") },
 
-	// { MODKEY,			XK_BackSpace,	spawn,		SHCMD("sysact") },
+	{ MODKEY,			XK_BackSpace,	spawn,		SHCMD("sysact") },
 	// { MODKEY|ShiftMask,		XK_BackSpace,	spawn,		SHCMD("sysact") },
 
 	{ MODKEY,			XK_Tab,		view,		{0} },
 	/* { MODKEY|ShiftMask,		XK_Tab,		spawn,		SHCMD("") }, */
 	{ MODKEY,			XK_q,		killclient,	{0} },
-	// { MODKEY|ShiftMask,		XK_q,		spawn,		SHCMD("sysact") },
+	{ MODKEY|ShiftMask,		XK_q,		spawn,		SHCMD("sysact") },
 	{ MODKEY,			XK_w,		spawn,		SHCMD("$BROWSER") },
 	{ MODKEY|ShiftMask,		XK_w,		spawn,		SHCMD(TERMINAL " -e sudo nmtui") },
 	{ MODKEY,			XK_e,		spawn,		SHCMD(TERMINAL " -e neomutt ; pkill -RTMIN+12 dwmblocks; rmdir ~/.abook") },
@@ -242,8 +242,8 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,		XK_comma,	spawn,		SHCMD("mpc seek 0%") },
 	{ MODKEY,			XK_period,	spawn,		SHCMD("mpc next") },
 	{ MODKEY|ShiftMask,		XK_period,	spawn,		SHCMD("mpc repeat") },
-	{ MODKEY,			XK_p,			spawn,		SHCMD("mpc toggle") },
-	{ MODKEY|ShiftMask,		XK_p,			spawn,		SHCMD("mpc pause ; pauseallmpv") },
+	// { MODKEY,			XK_p,			spawn,		SHCMD("mpc toggle") },
+	// { MODKEY|ShiftMask,		XK_p,			spawn,		SHCMD("mpc pause ; pauseallmpv") },
 	{ MODKEY,			XK_bracketleft,		spawn,		SHCMD("mpc seek -10") },
 	{ MODKEY|ShiftMask,		XK_bracketleft,		spawn,		SHCMD("mpc seek -60") },
 	{ MODKEY,			XK_bracketright,	spawn,		SHCMD("mpc seek +10") },
@@ -271,8 +271,8 @@ static Key keys[] = {
 	// { MODKEY,			XK_F6,		spawn,		SHCMD("torwrap") },
 	// { MODKEY,			XK_F7,		spawn,		SHCMD("td-toggle") },
 	// { MODKEY,			XK_F8,		spawn,		SHCMD("mw -Y") },
-	// { MODKEY,			XK_F9,		spawn,		SHCMD("dmenumount") },
-	// { MODKEY,			XK_F10,		spawn,		SHCMD("dmenuumount") },
+	{ MODKEY,			XK_F9,		spawn,		SHCMD("dmenumount") },
+	{ MODKEY,			XK_F10,		spawn,		SHCMD("dmenuumount") },
 	// { MODKEY,			XK_F11,		spawn,		SHCMD("mpv --no-cache --no-osc --no-input-default-bindings --profile=low-latency --input-conf=/dev/null --title=webcam $(ls /dev/video[0,2,4,6,8] | tail -n 1)") },
 	// { MODKEY,			XK_F12,		spawn,		SHCMD("remaps & notify-send \\\"⌨️ Keyboard remapping...\\\" \\\"Re-running keyboard defaults for any newly plugged-in keyboards.\\\"") },
 	{ MODKEY,			XK_space,	zoom,		{0} },
@@ -316,6 +316,8 @@ static Key keys[] = {
 	{ MODKEY,			XK_Up,	spawn,	SHCMD("/home/sam/scripts/backlight -inc 500") },
 	{ MODKEY,			XK_Down,	spawn,	SHCMD("/home/sam/scripts/backlight -dec 500") },
 	{ MODKEY,			XK_p,	spawn,	SHCMD("mons -n right") },
+	{ MODKEY|ShiftMask,			XK_p,	spawn,	SHCMD("displayselect") },
+
 	/* { MODKEY|Mod4Mask,              XK_h,      incrgaps,       {.i = +1 } }, */
 	/* { MODKEY|Mod4Mask,              XK_l,      incrgaps,       {.i = -1 } }, */
 	/* { MODKEY|Mod4Mask|ShiftMask,    XK_h,      incrogaps,      {.i = +1 } }, */
