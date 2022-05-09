@@ -18,7 +18,7 @@ static int topbar             = 1;        /* 0 means bottom bar */
 static const int user_bh      = 0;        /* 0 means that dwm will calculate bar height, >= 1 means dwm will user_bh as bar height */
 static char *fonts[]          = { 
   "JetBrainsMono:style:medium:size=11",
-  "Material Design Icons-Regular:size=18",
+  "Material Design Icons:size=18",
   "JetBrainsMono Nerd Font:style:medium:size=11",
   // "IcoMoon Free:pixelsize=16:antialias=true:autohint=true",
 };
@@ -50,11 +50,9 @@ static Sp scratchpads[] = {
 };
 
 /* tagging */
-// static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
-// static const char *tags[] = { "󰎤","󰎧","󰎪","󰎭","󰎱","󰎳","󰎶","󰎹","󰎼" };
+static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 // static const char *tags[] = {"","","","","","","","",""};
 // static const char *tags[] = {"","","","","","","","",""};
-static const char *tags[] = { "󱂈","󱂉","󱂊","󱂋","󱂌","󱂍","󱂎","󱂏","󱂐" };
 
 
 static const Rule rules[] = {
@@ -65,6 +63,8 @@ static const Rule rules[] = {
 	/* class    instance      title       	 tags mask    isfloating   isterminal  noswallow  monitor */
 	{ "Gimp",     NULL,       NULL,       	    1 << 8,       0,           0,         0,        -1 },
 	{ TERMCLASS,   NULL,       NULL,       	    0,            0,           1,         0,        -1 },
+  { TERMCLASS,  NULL,       "connect_to_beoplay",  0,       1,           1,         0,        -1 },
+  { TERMCLASS,  NULL,       "connect_to_xm3",  0,       1,           1,         0,        -1 },
 	{ NULL,       NULL,       "Event Tester",   0,            0,           0,         1,        -1 },
 	{ NULL,       NULL,       "pulsemixer",         0,            1,           1,         1,        -1 },
 	{ NULL,      "spterm",    NULL,       	    SPTAG(0),     1,           1,         0,        -1 },
@@ -170,13 +170,13 @@ static Key keys[] = {
 	{ MODKEY,			XK_equal,	spawn,		SHCMD("pamixer --allow-boost -i 5; kill -44 $(pidof dwmblocks)") },
 	{ MODKEY|ShiftMask,		XK_equal,	spawn,		SHCMD("pamixer --allow-boost -i 15; kill -44 $(pidof dwmblocks)") },
 
-	{ MODKEY,			XK_BackSpace,	spawn,		SHCMD("sysact") },
-	// { MODKEY|ShiftMask,		XK_BackSpace,	spawn,		SHCMD("sysact") },
+	{ MODKEY,			XK_BackSpace,	spawn,		SHCMD("~/scripts/sysact") },
+	// { MODKEY|ShiftMask,		XK_BackSpace,	spawn,		SHCMD("~/scripts/sysact") },
 
 	{ MODKEY,			XK_Tab,		view,		{0} },
 	/* { MODKEY|ShiftMask,		XK_Tab,		spawn,		SHCMD("") }, */
 	{ MODKEY,			XK_q,		killclient,	{0} },
-	{ MODKEY|ShiftMask,		XK_q,		spawn,		SHCMD("sysact") },
+	{ MODKEY|ShiftMask,		XK_q,		spawn,		SHCMD("~/scripts/sysact") },
 	{ MODKEY,			XK_w,		spawn,		SHCMD("$BROWSER") },
 	{ MODKEY|ShiftMask,		XK_w,		spawn,		SHCMD(TERMINAL " -e sudo nmtui") },
 	{ MODKEY,			XK_e,		spawn,		SHCMD(TERMINAL " -e neomutt ; pkill -RTMIN+12 dwmblocks; rmdir ~/.abook") },
@@ -230,7 +230,8 @@ static Key keys[] = {
 	/* { MODKEY|ShiftMask,		XK_c,		spawn,		SHCMD("") }, */
 	/* V is automatically bound above in STACKKEYS */
 	{ MODKEY,			XK_b,		togglebar,	{0} },
-	{ MODKEY|ShiftMask,		XK_b,		spawn,		SHCMD(TERMINAL " -e ~/scripts/bluetooth/connect_to_beoplay") },
+	{ MODKEY|ShiftMask,		XK_b,		spawn,		SHCMD(TERMINAL " -t connect_to_beoplay -e ~/scripts/bluetooth/connect_to_beoplay") },
+	{ MODKEY|ShiftMask,		XK_h,		spawn,		SHCMD(TERMINAL " -t connect_to_xm3 -e ~/scripts/bluetooth/connect_to_xm3") },
 	/* { MODKEY|ShiftMask,		XK_b,		spawn,		SHCMD("") }, */
 	// { MODKEY,			XK_n,		spawn,		SHCMD(TERMINAL " -e nvim -c VimwikiIndex") },
 	// { MODKEY|ShiftMask,		XK_n,		spawn,		SHCMD(TERMINAL " -e newsboat; pkill -RTMIN+6 dwmblocks") },
@@ -279,7 +280,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,		XK_space,	togglefloating,	{0} },
 
 	{ 0,				XK_Print,	spawn,		SHCMD("maim pic-full-$(date '+%y%m%d-%H%M-%S').png") },
-	{ ShiftMask,			XK_Print,	spawn,		SHCMD("maimpick") },
+	{ ShiftMask,			XK_Print,	spawn,		SHCMD("~/scripts/maimpick") },
 	{ MODKEY,			XK_Print,	spawn,		SHCMD("dmenurecord") },
 	{ MODKEY|ShiftMask,		XK_Print,	spawn,		SHCMD("dmenurecord kill") },
 	{ MODKEY,			XK_Delete,	spawn,		SHCMD("dmenurecord kill") },
@@ -297,7 +298,7 @@ static Key keys[] = {
 	{ 0, XF86XK_AudioForward,	spawn,		SHCMD("mpc seek +10") },
 	{ 0, XF86XK_AudioMedia,		spawn,		SHCMD(TERMINAL " -e ncmpcpp") },
 	{ 0, XF86XK_AudioMicMute,	spawn,		SHCMD("pactl set-source-mute @DEFAULT_SOURCE@ toggle") },
-	{ 0, XF86XK_PowerOff,		spawn,		SHCMD("sysact") },
+	{ 0, XF86XK_PowerOff,		spawn,		SHCMD("~/scripts/sysact") },
 	{ 0, XF86XK_Calculator,		spawn,		SHCMD(TERMINAL " -e bc -l") },
 	{ 0, XF86XK_Sleep,		spawn,		SHCMD("sudo -A zzz") },
 	{ 0, XF86XK_WWW,		spawn,		SHCMD("$BROWSER") },
@@ -316,7 +317,7 @@ static Key keys[] = {
 	{ MODKEY,			XK_Up,	spawn,	SHCMD("/home/sam/scripts/backlight -inc 500") },
 	{ MODKEY,			XK_Down,	spawn,	SHCMD("/home/sam/scripts/backlight -dec 500") },
 	{ MODKEY,			XK_p,	spawn,	SHCMD("mons -n right") },
-	{ MODKEY|ShiftMask,			XK_p,	spawn,	SHCMD("displayselect") },
+	{ MODKEY|ShiftMask,			XK_p,	spawn,	SHCMD("~/scripts/displayselect") },
 
 	/* { MODKEY|Mod4Mask,              XK_h,      incrgaps,       {.i = +1 } }, */
 	/* { MODKEY|Mod4Mask,              XK_l,      incrgaps,       {.i = -1 } }, */
